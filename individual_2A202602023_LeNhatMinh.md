@@ -21,7 +21,7 @@ Hai trường nhận dạng được để trống có chủ đích vì repo kh�
 | Orchestration và A2A handoff | `olist_agents/orchestrator.py` | Case JSON, specialist findings | Output nháp và trace | Hoàn thành |
 | Policy và specialist agents | `olist_agents/agents.py` | CSV-backed handoffs | Phân tích customer/order/payment/delivery/policy | Hoàn thành |
 | Data access và hard gate | `repository.py`, `verifier.py` | Olist CSV, output nháp | Indexed data, pass/error | Hoàn thành |
-| Llama 3.2 runtime | `llm.py` | Handoff rút gọn | Model review có audit | Hoàn thành; lượt auto ghi nhận Ollama chưa khả dụng |
+| Llama 3.2 runtime | `llm.py` | Handoff rút gọn | Model review có audit | Hoàn thành; 350/350 model call thành công |
 | Batch artifacts | `cli.py`, `trace.py`, `input_generator.py` | Olist CSV | 50 input, 50 output, trace, metadata, zip | Hoàn thành |
 
 ### Việc hỗ trợ ngoài phạm vi chính
@@ -92,7 +92,7 @@ python run.py --help
 - **Cách xác minh sau khi sửa:** Có 50 input, 50 output, 750 trace row hợp lệ, ZIP có 50 JSON và 13/13 test pass.
 - **Điều học được:** Audit artifact chỉ có ý nghĩa khi phản ánh lượt chạy thật; nên dừng minh bạch thay vì làm đầy deliverable bằng dữ liệu giả.
 
-Phạm vi còn lại là model call thật: metadata hiện ghi 350 call thất bại vì Ollama chưa cài xong. Cần cài/pull `llama3.2:3b`, rồi chạy lại lệnh `required` trong `IMPLEMENTATION.md` để thay trace fallback.
+Blocker đã được xử lý: Ollama 0.32.5 và `llama3.2:3b` đã cài thành công. Lượt chạy `required` hoàn tất 50 case với 350/350 model call thành công, không có fallback.
 
 ## 7. Hiểu biết về luồng end-to-end
 
@@ -106,7 +106,7 @@ Phạm vi còn lại là model call thật: metadata hiện ghi 350 call thất 
 
 - [x] Nội dung kỹ thuật phản ánh đúng phần triển khai trong repo.
 - [x] Có thể giải thích luồng end-to-end và contract giữa các agent.
-- [x] Không ghi đã chạy 50 case hoặc Llama thành công khi input/runtime chưa có.
+- [x] Chỉ ghi Llama thành công sau khi metadata và trace xác nhận 350/350 model call completed.
 - [x] Báo cáo không chứa `.env`, API key, token hoặc secret.
 - [x] Họ tên và MSSV cần được chủ repo bổ sung trước khi nộp.
 

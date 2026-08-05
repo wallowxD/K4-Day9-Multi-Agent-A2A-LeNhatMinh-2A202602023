@@ -38,16 +38,21 @@ class LlamaRuntime:
         prompt = (
             "You are the semantic reviewer inside an e-commerce dispute agent. "
             "Never change amounts, timestamps, IDs, or policy rules. Review the structured handoff "
-            f"from {agent_name}. Return JSON only with keys validated (boolean) and note (max 20 words). "
+            f"from {agent_name}. Return only whether the handoff is internally consistent. "
             f"Handoff: {compact}"
         )
         body = json.dumps(
             {
                 "model": self.model,
                 "stream": False,
-                "format": "json",
+                "format": {
+                    "type": "object",
+                    "properties": {"validated": {"type": "boolean"}},
+                    "required": ["validated"],
+                    "additionalProperties": False,
+                },
                 "messages": [{"role": "user", "content": prompt}],
-                "options": {"temperature": 0, "num_predict": 80},
+                "options": {"temperature": 0, "num_predict": 16},
             }
         ).encode("utf-8")
         request = urllib.request.Request(
@@ -60,7 +65,10 @@ class LlamaRuntime:
             with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
                 raw = json.loads(response.read().decode("utf-8"))
             content = raw.get("message", {}).get("content", "{}")
-            review = json.loads(content)
+            try:
+                review = json.loads(content)
+            except json.JSONDecodeError:
+                review = {"validated": None, "parse_status": "unstructured_model_response"}
             self.completed_calls += 1
             return {"status": "completed", "model": self.model, "review": review}
         except (OSError, TimeoutError, ValueError, urllib.error.URLError) as exc:

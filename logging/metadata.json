@@ -1,15 +1,15 @@
 {
-  "model": "HuggingFaceTB/SmolLM2-135M-Instruct",
-  "parameter_size": "135M",
+  "model": "llama3.2:3b",
+  "parameter_size": "3B",
   "policy_version": "EC_POLICY_V2",
   "framework": "custom Python multi-agent orchestration",
   "runtime": "Python 3.14.6",
-  "llm_provider": "Hugging Face Transformers",
+  "llm_provider": "Ollama",
   "llm_mode": "required",
   "llm_calls": 350,
   "llm_calls_completed": 350,
   "llm_calls_failed": 0,
   "case_count": 50,
   "run_status": "completed",
-  "generated_at": "2026-08-05T09:06:24.158662+00:00"
+  "generated_at": "2026-08-05T13:32:19.856212+00:00"
 }

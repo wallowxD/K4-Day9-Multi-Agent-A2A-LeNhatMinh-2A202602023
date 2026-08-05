@@ -40,7 +40,7 @@ flowchart TD
 | Policy | Chỉ handoff của các agent | Customer/order/payment/delivery findings | Issue, root cause, responsibility, refund, actions | Không truy cập CSV hay tạo taxonomy ngoài V2 |
 | Verifier | CSV read-only và output nháp | Output đầy đủ | Pass hoặc hard-gate error | Không tự sửa output lỗi |
 
-Tất cả agent dùng cùng model `llama3.2:3b`. Mỗi lần review nhận payload rút gọn, `temperature=0`, giới hạn 80 output tokens và trả JSON. Kết quả review được ghi trace nhưng các phép tính deterministic vẫn là authoritative.
+Tất cả agent dùng cùng model `llama3.2:3b`. Mỗi lần review nhận payload rút gọn, `temperature=0`, giới hạn 16 output tokens và trả một boolean qua JSON Schema. Kết quả review được ghi trace nhưng các phép tính deterministic vẫn là authoritative.
 
 ## 3. Luồng thực thi và handoff
 
