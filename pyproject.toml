@@ -1,0 +1,12 @@
+[project]
+name = "olist-multi-agent-dispute-resolution"
+version = "1.0.0"
+description = "Deterministic multi-agent investigation pipeline for Olist disputes"
+requires-python = ">=3.11"
+
+[project.scripts]
+olist-agents = "olist_agents.cli:main"
+
+[tool.unittest]
+start-directory = "tests"
+
