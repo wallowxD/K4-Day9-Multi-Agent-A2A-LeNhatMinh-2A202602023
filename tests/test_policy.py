@@ -34,6 +34,7 @@ class PolicyAgentTests(unittest.TestCase):
     def test_unsupported_late_claim(self) -> None:
         result = self.decide()
         self.assertEqual(result["primary_issue"], "unsupported_late_claim")
+        self.assertEqual(result["confidence"], 0.95)
         self.assertEqual(result["recommended_refund_brl"], 0.0)
         self.assertEqual(result["resolution_actions"], ["reject_late_refund"])
 
@@ -120,4 +121,3 @@ class PolicyAgentTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

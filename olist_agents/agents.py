@@ -254,7 +254,7 @@ class PolicyAgent:
             "primary_issue": primary,
             "secondary_issues": secondary,
             "case_status": "action_required" if refund > 0 else "no_action",
-            "confidence": 1.0,
+            "confidence": 0.95,
             "root_cause_code": cause,
             "responsible_parties": responsible,
             "recommended_refund_brl": money(Decimal(str(refund))),
